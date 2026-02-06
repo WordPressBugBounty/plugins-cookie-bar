@@ -2,8 +2,8 @@
 Contributors: brontobytes
 Tags: cookie bar, consent, cookie, cookies, cookie compliance, cookie law, cookies, eu cookie, notice, notification, notify, privacy, privacy directive, gdpr, general data protection regulation, brontobytes
 Requires at least: 3.8
-Tested up to: 6.3.2
-Stable tag: 2.1
+Tested up to: 6.8.3
+Stable tag: 2.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,9 @@ That's all!
 
 
 == Changelog ==
+
+= Version 2.2 =
+1. PHP 8.4 check.
 
 = Version 2.1 =
 1. XSS vulnerability fix.

@@ -5,7 +5,7 @@ Plugin URI: https://www.brontobytes.com/blog/cookie-bar-free-wordpress-plugin/
 Description: Cookie Bar allows you to discreetly inform visitors that your website uses cookies.
 Author: Brontobytes
 Author URI: https://www.brontobytes.com/
-Version: 2.1
+Version: 2.2
 License: GPLv2
 */
 
