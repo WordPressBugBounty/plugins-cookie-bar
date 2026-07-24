@@ -2,8 +2,8 @@
 Contributors: brontobytes
 Tags: cookie bar, consent, cookie, cookies, cookie compliance, cookie law, cookies, eu cookie, notice, notification, notify, privacy, privacy directive, gdpr, general data protection regulation, brontobytes
 Requires at least: 3.8
-Tested up to: 6.8.3
-Stable tag: 2.2
+Tested up to: 7.0.2
+Stable tag: 2.3
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,10 @@ That's all!
 
 
 == Changelog ==
+
+= Version 2.3 =
+1. PHP 8.5 check.
+2. Layout fix for WP 7.x
 
 = Version 2.2 =
 1. PHP 8.4 check.

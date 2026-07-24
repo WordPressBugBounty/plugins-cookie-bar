@@ -5,7 +5,7 @@ Plugin URI: https://www.brontobytes.com/blog/cookie-bar-free-wordpress-plugin/
 Description: Cookie Bar allows you to discreetly inform visitors that your website uses cookies.
 Author: Brontobytes
 Author URI: https://www.brontobytes.com/
-Version: 2.2
+Version: 2.3
 License: GPLv2
 */
 
@@ -53,33 +53,137 @@ jQuery(document).ready(function($){
 });
 </script>
     <style type="text/css" >
-        .wrap {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 20px;
+        .wrap.cookie_bar_settings {
+            max-width: 960px;
+            padding: 26px 30px 30px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
         }
 
-        .postbox .inside h2, .wrap [class$="icon32"] + h2, .wrap h1, .wrap > h2:first-child {
-            padding: 0px;
+        .wrap.cookie_bar_settings h1 {
+            margin-bottom: 10px;
         }
 
-        @media screen and (max-width: 768px) {
-            input[type="text"] {
-                max-width: 200px !important;
-            ; }
+        .cookie_bar_settings__intro {
+            max-width: 760px;
+            margin: 0 0 18px;
+            color: #50575e;
+            font-size: 14px;
+            line-height: 1.6;
+        }
 
-            xmp {
+        .cookie_bar_settings__panel {
+            margin-top: 20px;
+        }
+
+        .wrap.cookie_bar_settings .form-table {
+            margin-top: 0;
+        }
+
+        .wrap.cookie_bar_settings .form-table th {
+            width: 220px;
+            padding: 20px 20px 20px 0;
+        }
+
+        .wrap.cookie_bar_settings .form-table td {
+            padding: 15px 10px;
+        }
+
+        .wrap.cookie_bar_settings fieldset label {
+            display: block;
+            margin: 0 0 10px;
+            line-height: 1.4;
+        }
+
+        .wrap.cookie_bar_settings input[type="text"] {
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .wrap.cookie_bar_settings input[size="4"] {
+            width: 70px;
+        }
+
+        .wrap.cookie_bar_settings .description {
+            max-width: 620px;
+            margin-top: 8px;
+            color: #646970;
+        }
+
+        .wrap.cookie_bar_settings code {
+            display: block;
+            max-width: 620px;
+            margin-top: 10px;
+            padding: 12px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            background: #f6f7f7;
+            border: 1px solid #dcdcde;
+        }
+
+        .wrap.cookie_bar_settings .cookie_bar_settings__divider th {
+            padding: 10px 0;
+        }
+
+        .wrap.cookie_bar_settings .cookie_bar_settings__divider hr {
+            max-width: none;
+            margin: 0;
+            border: 0;
+            border-top: 1px solid #dcdcde;
+        }
+
+        .cookie_bar_settings__footer {
+            margin-top: 20px;
+            color: #50575e;
+        }
+
+        .cookie_bar_settings__brand {
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        .cookie_bar_settings__brand img {
+            width: 100px;
+            height: auto;
+            vertical-align: middle;
+        }
+
+        @media screen and (max-width: 782px) {
+            .wrap.cookie_bar_settings {
+                padding: 18px;
+                border-radius: 10px;
+            }
+
+            .cookie_bar_settings__panel {
+                margin-top: 16px;
+            }
+
+            .wrap.cookie_bar_settings .form-table th,
+            .wrap.cookie_bar_settings .form-table td {
                 display: block;
-                white-space: pre-wrap;
+                width: auto;
+                padding: 12px 0;
+            }
+
+            .wrap.cookie_bar_settings .form-table th {
+                padding-bottom: 0;
+            }
+
+            .wrap.cookie_bar_settings input[type="text"] {
+                max-width: 100%;
             }
         }
 
     </style>
-<div class="wrap">
-<h2><?php _e('Cookie Bar Settings', 'cookie-bar'); ?></h2>
+<div class="wrap cookie_bar_settings">
+<h1><?php _e('Cookie Bar Settings', 'cookie-bar'); ?></h1>
+<div class="cookie_bar_settings__intro">
 <p><?php _e('Cookie Bar allows you to discreetly inform visitors that your website uses cookies.
 
 This is to notify your visitors that you are using cookies and does not control which or if cookies are set. Your cookies are set in any case.', 'cookie-bar'); ?></p>
+</div>
+<div class="cookie_bar_settings__panel">
 <form method="post" action="options.php">
     <?php settings_fields( 'cookie-bar-settings' ); ?>
     <?php do_settings_sections( 'cookie-bar-settings' ); ?>
@@ -101,33 +205,34 @@ This is to notify your visitors that you are using cookies and does not control 
                     $expiration_custom_date = $option_custom_date;
                 }
                 ?>
-                <input type="radio"  name="cookie_bar_expiration_type" <?php if ($expiration_type=="never") echo "checked";?> value="never">Never expire (until cookies are cleared)
-                <br/>
-                <input type="radio"  name="cookie_bar_expiration_type" <?php if ($expiration_type=="custom") echo "checked";?> value="custom">Custom expiration
+                <fieldset>
+                <label><input type="radio" onclick="handleClick_type(this);" name="cookie_bar_expiration_type" <?php if ($expiration_type=="never") echo "checked";?> value="never"> <?php _e('Never expire (until cookies are cleared)', 'cookie-bar'); ?></label>
+                <label><input type="radio" onclick="handleClick_type(this);" name="cookie_bar_expiration_type" <?php if ($expiration_type=="custom") echo "checked";?> value="custom"> <?php _e('Custom expiration', 'cookie-bar'); ?></label>
                 <div class="cookie_bar_days_to_expire">
-                    <input type="text" size="4"  name="cookie_bar_days_to_expire" value="<?php echo esc_html( $expiration_custom_date ); ?>" /> days
+                    <input type="text" size="4" name="cookie_bar_days_to_expire" value="<?php echo esc_html( $expiration_custom_date ); ?>" /> <?php _e('days', 'cookie-bar'); ?>
                 </div>
+                </fieldset>
 
 
             </td>
 
         </tr>
-        <tr>
+        <tr class="cookie_bar_settings__divider">
             <th colspan="2" >
-                <hr style="max-width: 205px; margin-left: 0;" />
+                <hr />
             </th>
         </tr>
         <tr valign="top">
             <th scope="row"><?php _e('Cookie Bar message', 'cookie-bar'); ?></th>
-            <td><input type="text" size="100" name="cookie_bar_message" value="<?php echo esc_html( get_option('cookie_bar_message') ); ?>" /> <small>HTML allowed - E.g.:<xmp>By continuing to browse this site, you agree to our <a href="https://aboutcookies.com/" target="_blank" rel="nofollow">use of cookies</a>.</xmp></small></td>
+            <td><input type="text" size="100" name="cookie_bar_message" value="<?php echo esc_html( get_option('cookie_bar_message') ); ?>" /> <div class="description"><?php _e('HTML allowed. Example:', 'cookie-bar'); ?><code><?php echo esc_html('By continuing to browse this site, you agree to our <a href="https://aboutcookies.com/" target="_blank" rel="nofollow">use of cookies</a>.'); ?></code></div></td>
         </tr>
         <tr valign="top">
             <th scope="row"><?php _e('Button text', 'cookie-bar'); ?></th>
-            <td><input type="text" size="20" name="cookie_bar_button" value="<?php echo esc_attr( get_option('cookie_bar_button') ); ?>" /> <small>E.g.: I understand</small></td>
+            <td><input type="text" size="20" name="cookie_bar_button" value="<?php echo esc_attr( get_option('cookie_bar_button') ); ?>" /> <p class="description"><?php _e('E.g.: I understand', 'cookie-bar'); ?></p></td>
         </tr>
-        <tr>
+        <tr class="cookie_bar_settings__divider">
             <th colspan="2" >
-                <hr style="max-width: 205px; margin-left: 0;" />
+                <hr />
             </th>
         </tr>
         <tr valign="top">
@@ -146,9 +251,9 @@ This is to notify your visitors that you are using cookies and does not control 
             <th scope="row"><?php _e('Bar font colour', 'cookie-bar'); ?></th>
             <td><input type="text" name="cookie_bar_bar_font_colour" value="<?php echo esc_attr( get_option('cookie_bar_bar_font_colour') ); ?>" class="cookie_bar_bar_font_colour" data-default-color="#ffffff" /></td>
         </tr>
-        <tr>
+        <tr class="cookie_bar_settings__divider">
             <th colspan="2" >
-                <hr style="max-width: 205px; margin-left: 0;" />
+                <hr />
             </th>
         </tr>
         <tr valign="top">
@@ -186,13 +291,22 @@ This is to notify your visitors that you are using cookies and does not control 
             }
         }
 
+        <?php if ($expiration_type == "never") { ?>
+            handleClick_type({ value: "never" });
+        <?php } else { ?>
+            handleClick_type({ value: "custom" });
+        <?php } ?>
+
     </script>
 
     <?php submit_button(); ?>
 </form>
-<p>We are very happy to be able to provide this and other <a target="_blank" href="https://www.brontobytes.com/blog/c/wordpress-plugins/">free WordPress plugins</a>.</p>
-<p>Plugin developed by <a href="https://www.brontobytes.com/" target="_blank" >Brontobytes</a></p>
-    <a href="https://www.brontobytes.com/" target="_blank"><img width="100" style="vertical-align:middle" src="<?php echo plugins_url( 'images/brontobytes.svg', __FILE__ ) ?>" alt="Web hosting provider"></a>
+</div>
+<div class="cookie_bar_settings__footer">
+<p><?php _e('We are very happy to be able to provide this and other', 'cookie-bar'); ?> <a target="_blank" href="https://www.brontobytes.com/blog/c/wordpress-plugins/"><?php _e('free WordPress plugins', 'cookie-bar'); ?></a>.</p>
+<p><?php _e('Plugin developed by', 'cookie-bar'); ?> <a href="https://www.brontobytes.com/" target="_blank" >Brontobytes</a></p>
+    <a class="cookie_bar_settings__brand" href="https://www.brontobytes.com/" target="_blank"><img src="<?php echo plugins_url( 'images/brontobytes.svg', __FILE__ ) ?>" alt="Web hosting provider"></a>
+</div>
 </div>
 <?php }
 
